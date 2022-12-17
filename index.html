@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+</head>
+<body>
+    <main class="calculator">
+        <div class="container">
+            <section class="screen container">0</section>
+            <div class="calc-btns">
+                <section class="nums">
+                    <button class="num btn" data-digit="9">9</button>
+                    <button class="num btn" data-digit="8">8</button>
+                    <button class="num btn" data-digit="7">7</button>
+                    <button class="num btn" data-digit="6">6</button>
+                    <button class="num btn" data-digit="5">5</button>
+                    <button class="num btn" data-digit="4">4</button>
+                    <button class="num btn" data-digit="3">3</button>
+                    <button class="num btn" data-digit="2">2</button>
+                    <button class="num btn" data-digit="1">1</button>
+                    <button class="btn num" data-operator="equals">=</button>
+                    <button class="btn num" data-operator="decimal">.</button>
+                    <button class="num btn" data-digit="0">0</button>
+                </section>
+                <section class="operators">
+                    <button class="btn operator" data-operator="divide">/</button>
+                    <button class="btn operator" data-operator="multiply">x</button>
+                    <button class="btn operator" data-operator="substract">-</button>
+                    <button class="btn operator" data-operator="add">+</button>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
