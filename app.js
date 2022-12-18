@@ -4,27 +4,42 @@ let btns = document.querySelectorAll('.btn');
 let operatorBtns = document.querySelectorAll('.operator');
 let clearBtn = document.querySelector('.clearBtn');
 
+let operators = ['-', '+', '/', '*'];
+
 let x = null;
 let y = null;
+let res = null;
 let operator = null;
-
-let inputs = [];
+let currentNum = null;
 
 btns.forEach(btn => {
     btn.addEventListener("click", e => {
         e.preventDefault();
-        if(screen.textContent === '0') {
+        if(screen.textContent === '0' && e.target.getAttribute('data-operator') != '=') {
             clearScreen();
         }
-        if(e.target.getAttribute('data-digit')) {
-            screen.textContent += btn.getAttribute('data-digit');
+        if(e.target.getAttribute('data-operator') != '=') {
+            screen.textContent += btn.textContent;
         }
         if(e.target.getAttribute('data-operator') && x == null && screen.textContent != '') {
-            x = Number(screen.textContent);
-            clearScreen();
-        } else if (e.target.getAttribute('data-operator') && y == null) {
-            y = Number(screen.textContent);
-            clearScreen();
+            currentNum = Number(screen.textContent.replace(/\D/g, ""));
+            x = currentNum;
+        } else if (e.target.getAttribute('data-operator') && y == null && res == null) {
+            if(screen.textContent.includes(operator)) {
+                y = Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/\D/g, ""));
+                console.log(screen.textContent);
+                console.log('Y iz '+ y);
+                currentNum = y;
+            } else {
+                y = Number(screen.textContent.replace(/\D/g, ""));
+                console.log('Y is ' + y);
+            }
+        }
+        if(e.target.getAttribute('data-operator') == '=' && x !== null && y !== null) {
+            res = calc(x, y);
+            screen.textContent = res;
+            x = res;
+            y = null;
         }
     });
 });
@@ -32,10 +47,11 @@ btns.forEach(btn => {
 operatorBtns.forEach(btn => {
     btn.addEventListener("click", e => {
         e.preventDefault();
-        if (x != null && y != null && operator != null) {
+        if (!!x && !!y && !!operator) {
             screen.textContent = calc(x, y);
-            x = calc(x, y);
-            y = null;
+            currentNum = calc(x, y);
+            x = currentNum;
+            !!y;
         }
         if(x == null) return; else {
             operator = e.target.getAttribute('data-operator');
