@@ -52,8 +52,8 @@
     background: #6d6d6d;
     flex-direction: column;
   }
-  .calc-btns {
-    padding-top: 0.5em;
+  .calcs {
+    padding: 0.5em 0;
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-gap: 0.5em;
@@ -95,9 +95,11 @@
   .operator {
     background: orange;
   }
+  .bottom-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.5em;
 
-  .clear {
-    grid-column: -3 / -1;
   }
   .clearBtn {
     width: 100%;
