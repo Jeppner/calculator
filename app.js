@@ -70,8 +70,9 @@ btns.forEach(btn => {
 });
 
 
-document.addEventListener("keydown", e => {
+document.addEventListener("keyup", e => {
     let keypress = e.key;
+
     for(let btn of btns) {
         if(keypress === "Backspace" || keypress === "Delete") {
             return screen.textContent = screen.textContent.slice(0, -1);
@@ -80,30 +81,33 @@ document.addEventListener("keydown", e => {
             if(screen.textContent === '0') {
                 clearScreen();
             }
+            if(keypress !== '=' && keypress !== 'Backspace') {
+                screen.textContent += keypress;
+                console.log(keypress);
+            }
             if(keypress === '.' && dotCount > 0) {
                 return;
-            } else if (keypress === '.'){
-                dotCount++;
-                return screen.textContent += keypress;
+            } else if (keypress === '.' && dotCount === 0){
+                return dotCount++;
             }
+        }
+        /* Work here next */
+        if(keypress === '+' || keypress === '-' || keypress === '/' || keypress === '*') {
+            if (/[+-\/*]$/.test(screen.textContent) && /[+-\/*]$/.test(keypress)) {
+                screen.textContent = screen.textContent.slice(0, -1);
+                operator = keypress;
+            }
+        }
+
             // Calculate X
             if(x == null && screen.textContent != '' && keypress === '+' || keypress === '-' || keypress === '/' || keypress === '*') {
                 currentNum = Number(screen.textContent.replace(/[^0-9.]+/g, ""));
                 x = currentNum;
                 dotCount = 0;
-
         // Calculate Y
-         } else if (y == null && res == null && !!operator) {
-            if(screen.textContent.includes(operator) && Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, "")) != 0 || !!Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, ""))) {
-                y = Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, ""));
+         } else if (y == null && res == null && !!operator && keypress === 'Enter') {
+                y = Number(screen.textContent.slice(screen.textContent.indexOf(operator)+1, screen.textContent.length));
                 dotCount = 0;
-            } 
-        }
-        if(keypress === '+' || keypress === '-' || keypress === '/' || keypress === '*') {
-            if (/[+-\/*]/.test(keypress) && /[+-\/*]$/.test(screen.textContent)) {
-                screen.textContent = screen.textContent.slice(0, -1);
-            }
-            operator = keypress;
         }
             if(keypress === 'Enter' && !!x && !!y && !!operator) {
                 res = calc(x, y);
@@ -120,10 +124,6 @@ document.addEventListener("keydown", e => {
                 res = null;
                 operator = null;
             }
-            if(keypress != '=' && keypress !== 'Backspace') {
-                screen.textContent += keypress;
-            }
-        }
     }
 })
 
