@@ -31,7 +31,13 @@ btns.forEach(btn => {
         }
         if(e.target.getAttribute('data-operator') == '=' && x !== null && y !== null) {
             res = calc(x, y);
-            screen.textContent = res.toFixed(2);
+            if(res > 9999999999) {
+                screen.textContent = res.toExponential();
+            } else if(res % 1 !== 0) {
+                screen.textContent = res.toFixed(2);
+            } else {
+                screen.textContent = res;
+            }
             currentNum = res;
             x = res;
             y = null;
