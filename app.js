@@ -29,15 +29,15 @@ btns.forEach(btn => {
         if(e.target.getAttribute('data-operator') != '=' && e.target.getAttribute('data-misc') != 'del') {
             if (/[+-\/*]/.test(e.target.getAttribute('data-operator')) && /[+-\/*]$/.test(screen.textContent)) {
                 screen.textContent = screen.textContent.slice(0, -1);
+                operator = e.target.getAttribute('data-operator');
             }
             screen.textContent += btn.textContent;
-            console.log(x, y);
         }
         if(e.target.getAttribute('data-operator') && x == null && screen.textContent != '') {
             currentNum = Number(screen.textContent.replace(/\D/g, ""));
             x = currentNum;
         } else if (e.target.getAttribute('data-operator') && y == null && res == null) {
-            if(screen.textContent.includes(operator)) {
+            if(screen.textContent.includes(operator) && Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, "")) != 0 || !!Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, ""))) {
                 y = Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, ""));
             } 
         }
