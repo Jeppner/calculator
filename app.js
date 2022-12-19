@@ -59,6 +59,16 @@ btns.forEach(btn => {
     });
 });
 
+
+document.addEventListener("keydown", e => {
+    let keypress = e.key;
+    for(let btn of btns) {
+        if(keypress === btn.textContent) {
+            screen.textContent += keypress;
+        }
+    }
+})
+
 operatorBtns.forEach(btn => {
     btn.addEventListener("click", e => {
         e.preventDefault();
