@@ -87,7 +87,7 @@
     box-shadow: 0 4px #350d52ce;
     font-family: 'League Spartan', sans-serif !important;
     background: #f7f6ec;
-    /* margin: .3em; */
+    transition: 0.1s;
 }
 .btn:hover {
     background: #f3f0d2;

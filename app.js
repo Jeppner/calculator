@@ -17,7 +17,7 @@ btns.forEach(btn => {
     btn.addEventListener("click", e => {
         e.preventDefault();
         if(e.target.getAttribute('data-digit') == '.') {
-            if(dotCount > 0 ){
+            if(dotCount > 0 || x != null && operator == null){
                 return;
             } else {
                 dotCount++;
@@ -33,14 +33,19 @@ btns.forEach(btn => {
             }
             screen.textContent += btn.textContent;
         }
+        // Calculate X
         if(e.target.getAttribute('data-operator') && x == null && screen.textContent != '') {
-            currentNum = Number(screen.textContent.replace(/\D/g, ""));
+            currentNum = Number(screen.textContent.replace(/[^0-9.]+/g, ""));
             x = currentNum;
+            dotCount = 0;
+        // Calculate Y
         } else if (e.target.getAttribute('data-operator') && y == null && res == null) {
             if(screen.textContent.includes(operator) && Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, "")) != 0 || !!Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, ""))) {
                 y = Number(screen.textContent.substring(screen.textContent.indexOf(operator) + 1).replace(/[^0-9.]+/g, ""));
+                dotCount = 0;
             } 
         }
+
         if(e.target.getAttribute('data-operator') == '=' && x !== null && y !== null) {
             res = calc(x, y);
             if(res > 9999999999) {
@@ -64,6 +69,12 @@ document.addEventListener("keydown", e => {
     let keypress = e.key;
     for(let btn of btns) {
         if(keypress === btn.textContent) {
+            if(keypress === '.' && dotCount > 0) {
+                return;
+            } else if (keypress === '.'){
+                dotCount++;
+                return screen.textContent += keypress;
+            }
             screen.textContent += keypress;
         }
     }
