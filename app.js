@@ -11,15 +11,27 @@ let y = null;
 let res = null;
 let operator = null;
 let currentNum = null;
+let dotCount = 0;
 
 btns.forEach(btn => {
     btn.addEventListener("click", e => {
         e.preventDefault();
+        if(e.target.getAttribute('data-digit') == '.') {
+            if(dotCount > 0 ){
+                return;
+            } else {
+                dotCount++;
+            }
+        }
         if(screen.textContent === '0' && e.target.getAttribute('data-operator') != '=') {
             clearScreen();
         }
         if(e.target.getAttribute('data-operator') != '=' && e.target.getAttribute('data-misc') != 'del') {
+            if (/[+-\/*]/.test(e.target.getAttribute('data-operator')) && /[+-\/*]$/.test(screen.textContent)) {
+                screen.textContent = screen.textContent.slice(0, -1);
+            }
             screen.textContent += btn.textContent;
+            console.log(x, y);
         }
         if(e.target.getAttribute('data-operator') && x == null && screen.textContent != '') {
             currentNum = Number(screen.textContent.replace(/\D/g, ""));
@@ -90,4 +102,5 @@ function clearAll() {
     x = null;
     y = null;
     operator = null;
+    dotCount = 0;
 }
